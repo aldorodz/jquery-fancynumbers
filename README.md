@@ -15,6 +15,6 @@ Usage
 $('.some-div').FancyNumbers();
 ```
 - The div should be within an integer.
-- The animation only starts when the numbers are in viewport.
+- The animation only starts when the div (element) are in viewport.
 
 
