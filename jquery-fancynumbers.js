@@ -1,3 +1,12 @@
+
+/************************
+jquery-fancynumbers v1.1
+https://github.com/AldoRodz/jquery-fancynumbers/
+
+requires jQuery 1.7+
+Copyright (c) 2014, Aldo Rodríguez
+************************/
+
 (function($) {
 	var container, currentNumber, finalNumber, numberToAdd, difference;
 	currentNumber = 0; numberToAdd = 1; smoothDescent = 2;
