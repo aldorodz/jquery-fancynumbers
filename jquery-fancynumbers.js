@@ -104,7 +104,6 @@ Copyright (c) 2014, Aldo Rodríguez
         		if (isInViewport(elem) === true && started === false){
         			started = startAnimation(elem, finalNumber)
         		}
-        		console.log(started)
         	});
         }
 
