@@ -10,11 +10,15 @@ Usage
 $('.some-div').FancyNumbers();
 ```
 
+- The div should be within an integer.
+- The animation only starts when the div (element) are in viewport.
+
+
+
 Example:
 
 The element with the number ```<div id="fancy_numbers">5467</div>``` Initialized by calling ```$("#fancy_numbers").FancyNumbers();```.
 
-- The div should be within an integer.
-- The animation only starts when the div (element) are in viewport.
+
 
 
