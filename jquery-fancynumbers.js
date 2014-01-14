@@ -1,4 +1,3 @@
-
 /************************
 jquery-fancynumbers v1.1
 https://github.com/AldoRodz/jquery-fancynumbers/
@@ -38,7 +37,7 @@ Copyright (c) 2014, Aldo Rodríguez
 			}
 		}
 
-		// sometimes needed to add 1
+		// sometimes needed to add only 1 to finish the animation
 		if (numberToAdd == 0){
 			numberToAdd = 1
 		}
