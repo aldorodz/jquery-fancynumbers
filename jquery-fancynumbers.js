@@ -7,8 +7,8 @@ Copyright (c) 2014, Aldo Rodríguez
 ************************/
 
 (function($) {
-	var container, currentNumber, finalNumber, numberToAdd, difference;
-	currentNumber = 0; numberToAdd = 1; smoothDescent = 2;
+	var elem, currentNumber, finalNumber, numberToAdd, difference, started;
+	currentNumber = 0; numberToAdd = 1; smoothDescent = 2, started = false;
 
 	// generate a number to add
 	var getSumNumber = function(finalNumber, currentNumber) {
@@ -37,7 +37,7 @@ Copyright (c) 2014, Aldo Rodríguez
 			}
 		}
 
-		// sometimes needed to add only 1 to finish the animation
+		// sometimes needed to add 1
 		if (numberToAdd == 0){
 			numberToAdd = 1
 		}
@@ -45,7 +45,7 @@ Copyright (c) 2014, Aldo Rodríguez
 		return numberToAdd
 	};
 
-	var setAnimation = function(container, finalNumber) {
+	var createAnimation = function(elem, finalNumber) {
 		// return the number to the sum
 		numberToAdd = getSumNumber(finalNumber, currentNumber)
 
@@ -53,7 +53,7 @@ Copyright (c) 2014, Aldo Rodríguez
 			// Add the number to the previous number
 			currentNumber = parseInt(currentNumber) + numberToAdd
 			// Show current number
-			container.text(currentNumber);
+			elem.text(currentNumber);
 		}
 		else if (currentNumber == finalNumber){
 			// Finish if the current number is the one that started
@@ -62,10 +62,29 @@ Copyright (c) 2014, Aldo Rodríguez
 
 	};
 
+	// if everything it's ok start animation
+	var startAnimation = function(elem, finalNumber){
+		numberSum = setInterval(function(){createAnimation(elem, finalNumber)},5);
+        elem.text("0");
+        return true
+	}
+
+	// Check if is element is in viewport
+	var isInViewport = function(elem) {
+	    var windowViewTop = $(window).scrollTop();
+    	var windowViewBottom = windowViewTop + $(window).height();
+
+
+    	var elemTop = elem.offset().top;
+    	var elemBottom = elemTop + elem.height();
+
+    	return ((elemBottom >= windowViewTop) && (elemTop <= windowViewBottom) && (elemBottom <= windowViewBottom) && (elemTop >= windowViewTop));
+	}
+
 	$.fn.FancyNumbers = function() {
 		// Get the start number which will end the animation
         finalNumber = $(this).text();
-        container = $(this);
+        elem = $(this);
 
         // Check is a valid number
         if (isNaN(finalNumber) == true){
@@ -73,10 +92,22 @@ Copyright (c) 2014, Aldo Rodríguez
         	return false;
         }
 
-        // Start a Interval to increment number from 0
-        numberSum = setInterval(function(){setAnimation(container, finalNumber)},5);
+        if (finalNumber == 0){
+        	return false;
+        }
 
-        container.text("0");
+        if (isInViewport(elem) === true && started === false){
+        	started = startAnimation(elem, finalNumber)
+        }
+        else{
+        	$(window).scroll(function(){
+        		if (isInViewport(elem) === true && started === false){
+        			started = startAnimation(elem, finalNumber)
+        		}
+        		console.log(started)
+        	});
+        }
+
 
         return this;
     }
