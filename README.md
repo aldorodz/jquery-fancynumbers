@@ -1,19 +1,21 @@
 jquery-fancynumbers
 ======================
 
-Simple jQuery plugin to play an number ascending animation that goes from 0 to the number you specify.
+Simple jQuery plugin to create an number ascending animation that goes from 0 to the number you specify.
 This plugins it's inspired by foursquare.
-
-DEMO
-------------------
-For a demo see some profile venue statistics on foursquare.
-
 
 Usage
 ------------------
 ```javascript
 $('.some-div').FancyNumbers();
 ```
+
+Example:
+The element with the number
+```<div id="fancy_numbers">5467</div>```
+Initialized by calling
+```$('#fancy_numbers').FancyNumbers();```
+
 - The div should be within an integer.
 - The animation only starts when the div (element) are in viewport.
 
