@@ -53,7 +53,7 @@
 
 	// function to start the animation
 	var startAnimation = function(elem, finalNumber) {
-		elem.numberSum = setInterval(function(){createAnimation(elem, finalNumber)},5);
+		elem.numberSum = setInterval(function(){createAnimation(elem, finalNumber)}, 10);
         return true;
 	};
 
