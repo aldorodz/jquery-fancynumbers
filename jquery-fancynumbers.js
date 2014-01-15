@@ -1,21 +1,13 @@
-/************************
-jquery-fancynumbers v1.1
-https://github.com/AldoRodz/jquery-fancynumbers/
-
-requires jQuery 1.7+
-Copyright (c) 2014, Aldo Rodríguez
-************************/
+/*! jquery-fancynumbers v1.2 Copyright (c) 2014, Aldo Rodríguez
+ *  https://github.com/AldoRodz/jquery-fancynumbers/ */
 
 (function($) {
-	var elem, currentNumber, finalNumber, numberToAdd, difference, started;
-	currentNumber = 0; numberToAdd = 1; smoothDescent = 2, started = false;
-
 	// generate a number to add
 	var getSumNumber = function(finalNumber, currentNumber) {
-
+		var enumberToAdd, difference;
 		if (finalNumber <= 100){
 			// to small numbers
-			var difference = parseInt(finalNumber - currentNumber)
+			difference = parseInt(finalNumber - currentNumber)
 			if (difference > 50){
 				numberToAdd = parseInt(difference / 5)
 			}
@@ -26,9 +18,9 @@ Copyright (c) 2014, Aldo Rodríguez
 		}
 		else if (finalNumber > 100){
 			// to bigger numbers
-			var difference = parseInt(finalNumber - currentNumber)
+			difference = parseInt(finalNumber - currentNumber)
 			if (difference > 50){
-				numberToAdd = parseInt(finalNumber / 100) * 4
+				numberToAdd = parseInt(finalNumber / 100)
 			}
 			else{
 				numberToAdd = parseInt(difference / 5)
@@ -44,68 +36,77 @@ Copyright (c) 2014, Aldo Rodríguez
 	};
 
 	var createAnimation = function(elem, finalNumber) {
+		var currentNumber = $(elem).text();
 		// return the number to the sum
 		numberToAdd = getSumNumber(finalNumber, currentNumber)
 
 		if (currentNumber < finalNumber){
-			// Add the number to the previous number
-			currentNumber = parseInt(currentNumber) + numberToAdd
-			// Show current number
-			elem.text(currentNumber);
+			// Add the number to the current number and show the new number
+			$(elem).text(parseInt(currentNumber) + numberToAdd);
 		}
 		else if (currentNumber == finalNumber){
 			// Finish if the current number is the one that started
-			clearInterval(numberSum)
+			clearInterval(elem.numberSum)
 		}
 
 	};
 
-	// if everything it's ok start animation
-	var startAnimation = function(elem, finalNumber){
-		numberSum = setInterval(function(){createAnimation(elem, finalNumber)},5);
-        elem.text("0");
-        return true
-	}
+	// function to start the animation
+	var startAnimation = function(elem, finalNumber) {
+		elem.numberSum = setInterval(function(){createAnimation(elem, finalNumber)},5);
+        return true;
+	};
 
 	// Check if is element is in viewport
-	var isInViewport = function(elem) {
+	var isInViewport = function() {
 	    var windowViewTop = $(window).scrollTop();
     	var windowViewBottom = windowViewTop + $(window).height();
 
 
-    	var elemTop = elem.offset().top;
-    	var elemBottom = elemTop + elem.height();
+    	var elemTop = $(this).offset().top;
+    	var elemBottom = elemTop + $(this).height();
 
     	return ((elemBottom >= windowViewTop) && (elemTop <= windowViewBottom) && (elemBottom <= windowViewBottom) && (elemTop >= windowViewTop));
+	};
+
+	var functions = {
+		init: function(){
+			var elem = this;
+			elem.started = false
+			// Get the start number which will end the animation
+			elem.finalNumber = parseInt($(elem).text());
+			// Set 0
+			$(elem).text("0");
+			// Check is a valid number
+	        if (isNaN(elem.finalNumber) == true){
+	        	console.log("FancyNumbers: This is not a correct number")
+	        	return false;
+	        }
+
+	        if (elem.finalNumber == 0){
+	        	return false;
+	        }
+
+	        // if everything is okay start the animation
+	        if (isInViewport.call(elem) === true && elem.started === false){
+	        	elem.started = startAnimation(elem, elem.finalNumber)
+	        }
+	        else{
+	        	$(window).scroll(function(){
+	        		if (isInViewport.call(elem) === true && elem.started === false){
+	        			elem.started = startAnimation(elem, elem.finalNumber)
+	        		}
+	        	});
+	        }
+
+		}
 	}
 
 	$.fn.FancyNumbers = function() {
-		// Get the start number which will end the animation
-        finalNumber = parseInt($(this).text());
-        elem = $(this);
-
-        // Check is a valid number
-        if (isNaN(finalNumber) == true){
-        	console.log("FancyNumbers: This is not a correct number")
-        	return false;
-        }
-
-        if (finalNumber == 0){
-        	return false;
-        }
-
-        if (isInViewport(elem) === true && started === false){
-        	started = startAnimation(elem, finalNumber)
-        }
-        else{
-        	$(window).scroll(function(){
-        		if (isInViewport(elem) === true && started === false){
-        			started = startAnimation(elem, finalNumber)
-        		}
-        	});
-        }
-
-
+        var init = functions.init;
+		this.each(function(){
+		    init.call(this);
+		});
         return this;
     }
 
