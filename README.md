@@ -13,6 +13,11 @@ $('.some-div').FancyNumbers();
 - The div should be within an integer.
 - The animation only starts when the div (element) are in viewport.
 
+Demo
+------------------
+Check http://deventt.com/nervo-friends/
+Scroll down and see the effect in the number of "Favoritos"
+
 
 Example
 ------------------
