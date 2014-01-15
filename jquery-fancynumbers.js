@@ -2,9 +2,10 @@
  *  https://github.com/AldoRodz/jquery-fancynumbers/ */
 
 (function($) {
+	var elem;
 	// generate a number to add
 	var getSumNumber = function(finalNumber, currentNumber) {
-		var enumberToAdd, difference;
+		var numberToAdd, difference;
 		if (finalNumber <= 100){
 			// to small numbers
 			difference = parseInt(finalNumber - currentNumber)
