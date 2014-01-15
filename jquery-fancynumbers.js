@@ -12,8 +12,6 @@ Copyright (c) 2014, Aldo Rodríguez
 
 	// generate a number to add
 	var getSumNumber = function(finalNumber, currentNumber) {
-		finalNumber = parseInt(finalNumber)
-		currentNumber = parseInt(currentNumber)
 
 		if (finalNumber <= 100){
 			// to small numbers
@@ -83,7 +81,7 @@ Copyright (c) 2014, Aldo Rodríguez
 
 	$.fn.FancyNumbers = function() {
 		// Get the start number which will end the animation
-        finalNumber = $(this).text();
+        finalNumber = parseInt($(this).text());
         elem = $(this);
 
         // Check is a valid number
