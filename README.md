@@ -7,7 +7,7 @@ This plugins it's inspired by foursquare.
 Demo
 ------------------
 Check http://deventt.com/nervo-friends/
-Scroll down and see the effect in the number of "Favoritos"
+Scroll down and see the effect in the number of "Vistas"
 
 
 Usage
